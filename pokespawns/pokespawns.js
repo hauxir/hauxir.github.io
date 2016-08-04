@@ -5,9 +5,6 @@ $(function() {
 
     var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
-    if (!isMobile.matches) {
-    }
-
     $.get("pokemon-list.json",function(pokemons) {
         var markers = L.markerClusterGroup();
         map.addLayer(markers);
@@ -20,7 +17,7 @@ $(function() {
             .text(pokemon.name)); 
         }
 
-        if(!isMobile) {
+        if(!isMobile.matches) {
             $("#pokemon-list").select2({'width':'100%'});
         }
 
