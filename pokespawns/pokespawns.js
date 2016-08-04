@@ -17,6 +17,8 @@ $(function() {
 
         if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)  ) {
             $("#pokemon-list").select2({'width':'100%'});
+        } else {
+            $(".leaflet-control-zoom").hide();
         }
 
         $("#pokemon-list").on("select2:select", function (e) {
