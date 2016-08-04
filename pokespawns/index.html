@@ -51,7 +51,7 @@ $.get("pokemon-list.json",function(pokemons) {
     map.addLayer(markers);
 
     for(var i in pokemons) {
-        var pokemon = data[i];
+        var pokemon = pokemons[i];
         $("#pokemon-list")
         .append($("<option></option>")
         .attr("value",pokemon.id).data("thumb",pokemon.ThumbnailImage)
