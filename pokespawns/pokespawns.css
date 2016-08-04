@@ -1,0 +1,19 @@
+body {
+    padding-top: 50px; 
+}
+
+.navbar-header{
+    width:100% !important;
+}
+
+.navbar {
+    background-color:#3B5F99;
+}
+
+.select2 {
+    margin-top: 10px;
+}
+
+#map {
+    height: 100%;
+}

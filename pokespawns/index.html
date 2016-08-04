@@ -1,27 +1,16 @@
 <html>
     <head>
+       <title>Pokemon spawn punktar af pokemap.haukur.io</head>
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css" />
        <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.css" />
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.Default.css" />
-        <style> #map { height: 100%;  } 
-body {
-padding-top: 50px; 
-}
-.navbar-header{
-    width:100% !important;
-}
-.navbar {
-    background-color:#3B5F99;
-}
-.select2 {
-    margin-top: 10px;
-}
-
-</style>
+       <link rel="stylesheet" href="pokespawns.css" />
     </head>
+
     <body>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,51 +21,16 @@ padding-top: 50px;
     </nav>
 
     <div id="map"></div>
+
     </body>
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/leaflet.markercluster.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-plugins/1.8.0/layer/tile/Google.min.js"></script>
-            <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false&key=AIzaSyDw3WiqvzghiDtt4ykU5MhVhas1AVULjG8"></script>
 
-        <script>
-            var map = L.map('map').setView([64.1334904,-21.8524424,12], 12);
-            var googleLayer = new L.Google('ROADMAP');
-            map.addLayer(googleLayer);
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/leaflet.markercluster.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-plugins/1.8.0/layer/tile/Google.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false&key=AIzaSyDw3WiqvzghiDtt4ykU5MhVhas1AVULjG8"></script>
+    <script src="pokespawns.js"></script>
 
-$.get("pokemon-list.json",function(pokemons) {
-    var markers = L.markerClusterGroup();
-    map.addLayer(markers);
-
-    for(var i in pokemons) {
-        var pokemon = pokemons[i];
-        $("#pokemon-list")
-        .append($("<option></option>")
-        .attr("value",pokemon.id).data("thumb",pokemon.ThumbnailImage)
-        .text(pokemon.name)); 
-    }
-
-    $("#pokemon-list").select2({'width':'100%'});
-
-    $("#pokemon-list").on("select2:select", function (e) {
-        $.get("pokelocations/" + parseInt($("#pokemon-list").val()) + ".json",function(mons) {
-            markers.clearLayers();
-            var thumb = $("#pokemon-list option:selected").data('thumb');
-            var icon = L.icon({iconUrl: thumb, iconSize: [30,30]});
-            for(var i in mons) {
-                var mon = mons[i]
-                var latlng = L.latLng(mon.x, mon.y);
-                markers.addLayer(L.marker(latlng, {'icon':icon}));
-            }
-        },"json").error(function() {
-            markers.clearLayers();
-        });
-    }).trigger("select2:select");
-
-});
-
-
-        </script>
 </html>
