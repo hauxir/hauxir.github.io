@@ -3,8 +3,6 @@ $(function() {
     var googleLayer = new L.Google('ROADMAP');
     map.addLayer(googleLayer);
 
-    var isMobile = window.matchMedia("only screen and (max-width: 760px)");
-
     $.get("pokemon-list.json",function(pokemons) {
         var markers = L.markerClusterGroup();
         map.addLayer(markers);

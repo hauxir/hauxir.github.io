@@ -5,6 +5,7 @@ body {
 .navbar-header{
     width:100% !important;
     text-align:center;
+    padding:10px;
 }
 
 .navbar {
@@ -17,4 +18,8 @@ body {
 
 #map {
     height: 100%;
+}
+#pokemon-list {
+    margin-top:10px;
+    width:100%;
 }
