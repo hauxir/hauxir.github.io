@@ -3,6 +3,11 @@ $(function() {
     var googleLayer = new L.Google('ROADMAP');
     map.addLayer(googleLayer);
 
+    var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+
+    if (!isMobile.matches) {
+    }
+
     $.get("pokemon-list.json",function(pokemons) {
         var markers = L.markerClusterGroup();
         map.addLayer(markers);
@@ -15,7 +20,9 @@ $(function() {
             .text(pokemon.name)); 
         }
 
-        $("#pokemon-list").select2({'width':'100%'});
+        if(!isMobile) {
+            $("#pokemon-list").select2({'width':'100%'});
+        }
 
         $("#pokemon-list").on("select2:select", function (e) {
             $.get("pokelocations/" + parseInt($("#pokemon-list").val()) + ".json",function(mons) {
