@@ -24,6 +24,7 @@ $(function() {
             $("#pokemon-list").select2({'width':'100%'});
         }
 
+
         $("#pokemon-list").on("select2:select", function (e) {
             $.get("pokelocations/" + parseInt($("#pokemon-list").val()) + ".json",function(mons) {
                 markers.clearLayers();
@@ -38,6 +39,10 @@ $(function() {
                 markers.clearLayers();
             });
         }).trigger("select2:select");
+
+        $("#pokemon-list").change(function() {
+            $("#pokemon-list").trigger("select2:select");
+        })
 
     });
 
