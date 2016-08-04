@@ -1,0 +1,76 @@
+<html>
+    <head>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css" />
+       <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.css" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.Default.css" />
+        <style> #map { height: 100%;  } 
+body {
+padding-top: 50px; 
+}
+.navbar-header{
+    width:100% !important;
+}
+.select2 {
+    margin-top: 10px;
+}
+
+</style>
+    </head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+            <select id="pokemon-list">
+            </select>
+        </div>
+      </div>
+    </nav>
+
+    <div id="map"></div>
+    </body>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/leaflet.markercluster.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-plugins/1.8.0/layer/tile/Google.min.js"></script>
+            <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+
+        <script>
+            var mymap = L.map('map').setView([64.1334904,-21.8524424,12], 12);
+                  var googleLayer = new L.Google('ROADMAP');
+                        mymap.addLayer(googleLayer);
+
+$.get("pokemon-list.json",function(data) {
+    var markers = L.markerClusterGroup();
+    mymap.addLayer(markers);
+    for(var i in data) {
+        var pokemon = data[i];
+        $("#pokemon-list")
+        .append($("<option></option>")
+        .attr("value",pokemon.id)
+        .text(pokemon.name)); 
+    }
+
+    $("#pokemon-list").select2({'width':'100%'});
+
+    $("#pokemon-list").on("select2:select", function (e) {
+        $.get("pokelocations/" + parseInt($("#pokemon-list").val()) + ".json",function(mons) {
+            markers.clearLayers();
+            for(var i in mons) {
+                var mon = mons[i]
+                var latlng = L.latLng(mon.x, mon.y);
+                markers.addLayer(L.marker(latlng));
+            }
+        },"json").error(function() {
+            markers.clearLayers();
+        });
+    }).trigger("select2:select");
+
+});
+
+
+        </script>
+</html>
