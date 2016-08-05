@@ -27,9 +27,13 @@ $(function() {
                 var thumb = $("#pokemon-list option:selected").data('thumb');
                 var icon = L.icon({iconUrl: thumb, iconSize: [30,30]});
                 for(var i in mons) {
-                    var mon = mons[i]
+                    var mon = mons[i];
                     var latlng = L.latLng(mon.x, mon.y);
-                    markers.addLayer(L.marker(latlng, {'icon':icon}));
+                    var marker = L.marker(latlng, {'icon':icon});
+                    var d = new Date(mon.d*1000);
+                    var ds = moment(d).format('DD-MM-YYYY [kl.] hh:mm');
+                    marker.bindPopup('Fannst ' + ds);
+                    markers.addLayer(marker);
                 }
             },"json").error(function() {
                 markers.clearLayers();
