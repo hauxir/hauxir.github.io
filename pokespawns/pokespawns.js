@@ -31,7 +31,7 @@ $(function() {
                     var latlng = L.latLng(mon.x, mon.y);
                     var marker = L.marker(latlng, {'icon':icon});
                     var d = new Date(mon.d*1000);
-                    var ds = moment(d).format('DD-MM-YYYY [kl.] hh:mm');
+                    var ds = moment(d).format('DD-MM-YYYY [kl.] HH:mm');
                     marker.bindPopup('Fannst ' + ds);
                     markers.addLayer(marker);
                 }
